@@ -1,7 +1,6 @@
 package seleniumBooking.drivers;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import seleniumBooking.utils.ConfigUtil;
 
@@ -13,7 +12,7 @@ import java.io.IOException;
 public final class DriverFactory {
     private Driver driver;
     private WebDriver webDriver;
-    private DriverFactory driverFactory;
+    private static DriverFactory DRIVER_FACTORY;
 
     private DriverFactory() {
         try {
@@ -49,10 +48,10 @@ public final class DriverFactory {
      * Factory - supposed to be singleton.
      * @return instance of {@link DriverFactory}
      */
-    public DriverFactory getInstance() {
-        if (this.driverFactory == null) {
+    public static DriverFactory getInstance() {
+        if (DRIVER_FACTORY == null) {
             return new DriverFactory();
         }
-        return this.driverFactory;
+        return DRIVER_FACTORY;
     }
 }

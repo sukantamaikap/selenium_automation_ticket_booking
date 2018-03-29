@@ -7,7 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Browser driver interface.
  */
 public interface Driver {
-    WebDriver getDriver();
+    static final int WEB_DRIVER_WAIT = 30;
+    WebDriver getWebDriver();
     WebDriverWait getWebDriverWait();
     void quitDriver();
 }

@@ -1,27 +1,32 @@
 package seleniumBooking.utils;
 
 
+import org.testng.Assert;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
  * Util for running
  */
 public final class ConfigUtil {
+    private static final String CONFIG_FILE_PATH = "/home/smaikap/sandbox/java/selenium_automation_ticket_booking/src/main/java/seleniumBooking/config.properties";
 
     private ConfigUtil() {
 
     }
 
     private static Properties readProperties() throws IOException {
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         FileInputStream fileInput = null;
         try {
-            File file = new File("test.properties");
+            final File file = new File(CONFIG_FILE_PATH);
             fileInput = new FileInputStream(file);
             properties.load(fileInput);
+
         } finally {
             fileInput.close();
         }
@@ -38,6 +43,7 @@ public final class ConfigUtil {
 
     public static String getBrowser() throws IOException {
         if (readProperties() == null) {
+            Assert.fail("config file not found !!!");
             return null;
         }
 
