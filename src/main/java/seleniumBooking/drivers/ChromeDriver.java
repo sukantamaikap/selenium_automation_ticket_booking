@@ -2,6 +2,9 @@ package seleniumBooking.drivers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import seleniumBooking.utils.ConfigUtil;
+
+import java.io.IOException;
 
 /**
  * Driver for Chrome.
@@ -10,8 +13,8 @@ public class ChromeDriver implements Driver {
     private WebDriver webDriver;
     private WebDriverWait webDriverWait;
 
-    public ChromeDriver() {
-        System.setProperty("webdriver.chrome.driver","/usr/bin/google-chrome-stable");
+    public ChromeDriver() throws IOException {
+        System.setProperty(WEBDRIVER_CHROME_DRIVER, ConfigUtil.getChromeDriver());
         this.webDriver = new org.openqa.selenium.chrome.ChromeDriver();
         this.webDriverWait = new WebDriverWait(this.webDriver, WEB_DRIVER_WAIT);
     }

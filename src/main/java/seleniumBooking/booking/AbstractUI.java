@@ -2,6 +2,8 @@ package seleniumBooking.booking;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import seleniumBooking.drivers.DriverFactory;
 import seleniumBooking.pages.BookingPageFactory;
@@ -40,5 +42,10 @@ public class AbstractUI {
 
 
         this.driverFactory.getDriver().getWebDriver().navigate().to(ConfigUtil.getBaseUrl());
+    }
+
+    @AfterTest
+    public void shutDown() throws Exception {
+        this.driverFactory.getDriver().quitDriver();
     }
 }
