@@ -3,6 +3,9 @@ package seleniumBooking.pages;
 import seleniumBooking.drivers.Driver;
 import seleniumBooking.utils.PageElementUtil;
 
+/**
+ * Base class for all page objects.
+ */
 public class AbstractPage {
     private Driver browserDriver;
     private PageElementUtil elementUtil;
