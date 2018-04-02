@@ -1,6 +1,7 @@
 package seleniumBooking.drivers;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import seleniumBooking.utils.ConfigUtil;
 
@@ -15,7 +16,11 @@ public class ChromeDriver implements Driver {
 
     public ChromeDriver() throws IOException {
         System.setProperty(WEBDRIVER_CHROME_DRIVER, ConfigUtil.getChromeDriver());
-        this.webDriver = new org.openqa.selenium.chrome.ChromeDriver();
+
+        final ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-notifications");
+
+        this.webDriver = new org.openqa.selenium.chrome.ChromeDriver(options);
         this.webDriverWait = new WebDriverWait(this.webDriver, WEB_DRIVER_WAIT);
     }
 

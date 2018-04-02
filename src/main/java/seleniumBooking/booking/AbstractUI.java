@@ -37,11 +37,10 @@ public class AbstractUI {
         LOG.info("INIT PAGE");
         this.bookingPageFactory = new BookingPageFactory(this.driverFactory.getDriver());
 
+        this.driverFactory.getDriver().getWebDriver().navigate().to(ConfigUtil.getBaseUrl());
+
         LOG.info("MAXIMIZE WINDOW");
         this.driverFactory.getDriver().getWebDriver().manage().window().maximize();
-
-
-        this.driverFactory.getDriver().getWebDriver().navigate().to(ConfigUtil.getBaseUrl());
     }
 
     @AfterTest
