@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import seleniumBooking.pages.MMTHomePage;
+import seleniumBooking.utils.Months;
+import seleniumBooking.utils.SitClass;
 
 public class BookingEndToEnd extends AbstractUI {
     private static final Logger LOG = LoggerFactory.getLogger(BookingEndToEnd.class);
@@ -28,8 +30,13 @@ public class BookingEndToEnd extends AbstractUI {
         this.homePage.enterTo(TO_ROUND);
 
         LOG.info("ENTER DEPART AND RETURN DATE");
-        this.homePage.selectDepartDate();
-        this.homePage.selectReturnDate();
+//        this.homePage.selectDepartDate(12, Months.APRIL);
+//        this.homePage.selectReturnDate();
 
+        LOG.info("ENTER PASSENGERS");
+        this.homePage.enterPassengers(2, 0, 1, SitClass.ECONOMY);
+
+        LOG.info("HIT SEARCH!!");
+        this.homePage.search();
     }
 }

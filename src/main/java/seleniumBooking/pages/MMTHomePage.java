@@ -1,12 +1,14 @@
 package seleniumBooking.pages;
 
-import org.junit.Assert;
 import org.omg.CORBA.FREE_MEM;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import seleniumBooking.drivers.Driver;
+import seleniumBooking.utils.Months;
+import seleniumBooking.utils.SitClass;
 
 import java.util.List;
 
@@ -26,7 +28,18 @@ public class MMTHomePage extends AbstractPage {
 
     //date
     private static final String DEPART = "hp-widget__depart";
+    private static final String DEPART_DATE_PICKER_XPATH = "//div[@id='js-filterOptins']/child::table";
     private static final String RETURN = "hp-widget__return";
+
+    // pax
+    private static final String SELECT_PASSENGER_AND_CLASS = "//input[@id='hp-widget__paxCounter_pot']";
+    private static final String SELECT_CLASS = "//ul[@id='pot_ul']/li";
+    private static final String SELECT_ADULTS = "//ul[@id='js-adult_counter']/li[%s]";
+    private static final String SELECT_CHILDREN = "//ul[@id='js-child_counter']/li[%s]";
+    private static final String SELECT_INFANT = "//ul[@id='js-infant_counter']/li[%s]";
+
+    // search
+    private static final String SEARCH_BUTTON_ID = "searchBtn";
 
     public MMTHomePage(final Driver browserDriver) {
         super(browserDriver);
@@ -67,12 +80,77 @@ public class MMTHomePage extends AbstractPage {
         tripOptions.get(1).click();
     }
 
-    public void selectDepartDate() {
-        final WebElement datePicker = this.getElementUtil().findElement(By.id(DEPART));
-
+    public void selectDepartDate(final int date, final Months month) {
+        if (date < 1 || date > 31) {
+            org.testng.Assert.fail("Invalid date !!!");
+        }
+        this.getElementUtil().findElement(By.id(DEPART)).click();
+        final WebElement datePicker = this.getElementUtil().findElement(By.id(DEPART_DATE_PICKER_XPATH));
     }
 
     public void selectReturnDate() {
-        final WebElement datePicker = this.getElementUtil().findElement(By.id(RETURN));
+        this.getElementUtil().findElement(By.id(RETURN)).click();
     }
- }
+
+    public void enterPassengers(final int adultPassengers,
+                                final int kids,
+                                final int infant,
+                                final SitClass siteClass) {
+        LOG.info("CLICK ON \"PASSENGERS | CLASS\"");
+        this.getElementUtil().findElement(By.xpath(SELECT_PASSENGER_AND_CLASS)).click();
+
+        if (adultPassengers > 0) {
+            LOG.info("SELECT ADULTS");
+            if (adultPassengers > 9) {
+                Assert.fail("Adult passengers may not be more than 9 !!");
+            }
+            final String finalXpathAdults = String.format(SELECT_ADULTS, adultPassengers);
+            this.getElementUtil().findElement(By.xpath(finalXpathAdults)).click();
+        } else {
+            LOG.info("NO ADULTS TO SELECT !!");
+        }
+
+        if (kids > 0) {
+            if (kids > 6) {
+                Assert.fail("Can't book tickets for more than 6 kids !!!");
+            }
+            LOG.info("SELECT CHILDREN");
+            final String finalXpathKids = String.format(SELECT_CHILDREN, kids);
+            this.getElementUtil().findElement(By.xpath(finalXpathKids)).click();
+        } else {
+            LOG.info("NO CHILD TO SELECT!!!");
+        }
+
+        if (infant > 0) {
+            if (infant > 6) {
+                Assert.fail("Can't book ticket for more than 6 infants!!!");
+            }
+            LOG.info("SELECT INFANTS");
+            final String finalXpathInfants = String.format(SELECT_INFANT, infant);
+            this.getElementUtil().findElement(By.xpath(finalXpathInfants)).click();
+
+        } else {
+            LOG.info("NO INFANTS TO SELECT!!!");
+        }
+
+        if (siteClass != null) {
+            LOG.info("SELECT CLASS");
+            final List<WebElement> classOptions = this.getElementUtil().findElements(By.xpath(SELECT_CLASS));
+            if (classOptions.size() >= 3) {
+                for (WebElement option : classOptions) {
+                    if (option.getText().equalsIgnoreCase(siteClass.name())) {
+                        option.click();
+                        break;
+                    }
+                }
+            }
+
+        } else {
+            LOG.info("CLASS NOT SPECIFIED, BY DEFAULT ECONOMY IS SELECTED");
+        }
+    }
+
+    public void search() {
+        this.getElementUtil().findElement(By.id(SEARCH_BUTTON_ID)).click();
+    }
+}
