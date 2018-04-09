@@ -12,4 +12,12 @@ public class BookingPageFactory {
     public MMTHomePage getMMTHomePage() {
         return new MMTHomePage(this.browserDriver);
     }
+
+    public MMTSelectedFlightDetailsPage getMMTSelectedFlightDetailsPage() {
+        return new MMTSelectedFlightDetailsPage(this.browserDriver);
+    }
+
+    public MMTFlightListingPage getMMTFlightListingPage() {
+        return new MMTFlightListingPage(this.browserDriver);
+    }
 }
