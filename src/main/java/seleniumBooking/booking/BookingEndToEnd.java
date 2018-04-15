@@ -4,11 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import seleniumBooking.helper.PassengerInfoBuilder;
 import seleniumBooking.pages.MMTFlightListingPage;
 import seleniumBooking.pages.MMTHomePage;
+import seleniumBooking.pages.MMTPaymentPage;
 import seleniumBooking.pages.MMTSelectedFlightDetailsPage;
 import seleniumBooking.utils.Months;
+import seleniumBooking.utils.PassengerDetails;
 import seleniumBooking.utils.SitClass;
+
+import java.security.SecureRandom;
 
 public class BookingEndToEnd extends AbstractUI {
     private static final Logger LOG = LoggerFactory.getLogger(BookingEndToEnd.class);
@@ -19,12 +24,14 @@ public class BookingEndToEnd extends AbstractUI {
     private MMTHomePage homePage;
     private MMTFlightListingPage flightListingPage;
     private MMTSelectedFlightDetailsPage selectedFlightDetailsPage;
+    private MMTPaymentPage paymentPage;
 
     @BeforeClass
     public void preparePage() {
         this.homePage = this.bookingPageFactory.getMMTHomePage();
         this.flightListingPage = this.bookingPageFactory.getMMTFlightListingPage();
         this.selectedFlightDetailsPage = this.bookingPageFactory.getMMTSelectedFlightDetailsPage();
+        this.paymentPage = this.bookingPageFactory.getMMTPaymentPage();
     }
 
 
@@ -53,6 +60,19 @@ public class BookingEndToEnd extends AbstractUI {
         LOG.info("ENTER DETAILS FOR BOOKING");
         this.selectedFlightDetailsPage.enterEmail(BOOKING_EMAIL);
         this.selectedFlightDetailsPage.selectContinueAsGuest();
+
+        LOG.info("BUILD ADULT 1");
+        PassengerInfoBuilder infoBuilder = new PassengerInfoBuilder();
+        final String firstName = RandomStringGenerator
+        final PassengerDetails passenger1 = infoBuilder.buildPassengerInfo()
+
+
+        LOG.info("BUILD ADULT 2");
+
+        LOG.info("BUILD INFANT");
+
+        LOG.info("ENTER PASSENGER DETAILS");
+        this.paymentPage.enterPassengerDetails();
 
 
     }

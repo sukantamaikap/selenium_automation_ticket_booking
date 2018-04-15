@@ -3,6 +3,9 @@ package seleniumBooking.pages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seleniumBooking.drivers.Driver;
+import seleniumBooking.utils.PassengerDetails;
+
+import java.util.List;
 
 public class MMTPaymentPage extends AbstractPage {
 
@@ -14,7 +17,7 @@ public class MMTPaymentPage extends AbstractPage {
         super(browserDriver);
     }
 
-    public void enterAdultPassengerDetails(final int index) {
+    public void enterPassengerDetails(final List<PassengerDetails> passengers) {
 
     }
 }

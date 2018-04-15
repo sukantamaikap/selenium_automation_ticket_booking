@@ -20,4 +20,8 @@ public class BookingPageFactory {
     public MMTFlightListingPage getMMTFlightListingPage() {
         return new MMTFlightListingPage(this.browserDriver);
     }
+
+    public MMTPaymentPage getMMTPaymentPage() {
+        return new MMTPaymentPage(this.browserDriver);
+    }
 }
